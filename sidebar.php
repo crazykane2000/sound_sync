@@ -22,12 +22,12 @@
 						</span>
 						</a>
                         </li>
-                        <li><a href="album.php" title="Albums">
+                        <li><a href="add_track.php" title="Albums">
 						<span class="nav_icon">
 							<span class="icon icon_albums"></span>
 						</span>
 						<span class="nav_text">
-							My albums
+							Add Tracks
 						</span>
 						</a>
                         </li>

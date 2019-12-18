@@ -12,7 +12,7 @@
                 </div>
                 <div class="ms_top_right">                    
                     <div class="ms_top_btn">
-                        <a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>Logout</span></a>
+                        <a href="logout.php" class="ms_btn login_btn" ><span>Logout</span></a>
                     </div>
                 </div>
             </div>

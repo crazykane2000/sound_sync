@@ -1,7 +1,19 @@
-<!DOCTYPE html>
+<?php session_start();
+    include 'configuration_function.php';
+    if (check_user_exist($api_host,$_SESSION['user'])) {
+        # code... do nothing we are good to go
+    }else{
+        header('Location:index.php?choice=error&value=Invalid username or password please try logging in again');
+        exit();
+    }
+  ?><!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
+<?php $trackId = $_REQUEST['track_id']; $data = get_track_details("13.233.7.230", $trackId); //print_r($data);
+    $data = json_decode($data,true);
+    print_r($data);
+ ?>
 <html lang="en">
 <!--<![endif]-->
 <!-- Begin Head -->
@@ -46,14 +58,20 @@
                      <div class="col-sm-5">
                         <div class="album_single_data">
                             <div class="album_single_img">
-                                <img src="images/album/single_album.jpg" alt="" class="img-fluid">
+                                <?php 
+                                    $track_thumb = "default_thumb.jpg";
+                                    if ($data['trackDataJSON']['thumb_nail']!="") {
+                                        $track_thumb = $data['trackDataJSON']['thumb_nail'];
+                                    }
+                                 ?>
+                                <img src="tracks/<?php echo $track_thumb; ?>" alt="" class="img-fluid">
                             </div>
                             <div class="album_single_text">
-                                <h2>Dream Your Moments</h2>
-                                <p class="singer_name">By - Ava Cornish, Brian Hill</p>
+                                <h2><?php echo $data['name'];; ?></h2>
+                                <p class="singer_name">By - <?php echo $data['trackDataJSON']['artist']; ?></p>
                                 <div class="album_feature">
-                                    <a href="#" class="album_date">5 song | 25:10</a>
-                                    <a href="#" class="album_date">Released March 23, 2018  | Abc Music Company</a>
+                                    <a href="#" class="album_date">COST | <?php echo $data['cost']; ?> USD</a>
+                                    <a href="#" class="album_date">Released <?php $epoch = $data['timestamp']/1000000; echo date("d-m-Y H:i:s", substr($epoch, 0, 10)); ?></a>
                                 </div>
                                 <div class="album_btn">
                                     <a data-toggle="modal" data-target="#myModal" style="color:#fff;cursor:pointer" class="ms_btn play_btn"><span class="play_all">
@@ -68,17 +86,17 @@
                         <div style="padding: 20px;">
                             <div style="padding: 10px"></div>
                             <audio controls style="width: 90%">
-                              <source src="horse.ogv" type="audio/ogg">
+                              <source src="tracks/<?php echo $data['trackDataJSON']['track']; ?>" type="audio/ogg">
                                 Your browser does not support the audio element.
                             </audio>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Rank# : </span> 10</h3>
+                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Mood# : </span> <?php echo $data['trackDataJSON']['comments']['Mood']; ?></h3>
                                     <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Earning : </span> $500/Month</h3>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Writer : </span> Vinshu Gupta</h3>
-                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Song Tx No. : </span> 565675756575765fg675g757f6d5g75f7g5576</h3>
+                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">Writer : </span> <?php echo $data['trackDataJSON']['write']; ?></h3>
+                                    <h3 style="color: #fff;font-size: 20px;padding: 5px;font-weight: normal;"><span style="color:#3bc8e7;">owner : </span> <?php echo $data['ownerEmail']; ?></h3>
                                 </div>
                             </div>
                         </div>                         
@@ -89,72 +107,36 @@
                             <div class="album_list_wrapper">
                                 <ul class="album_list_name">
                                     <li>#</li>
-                                    <li>Song Title</li>
-                                    <li>Artist</li>
-                                    <li class="text-center">Duration</li>
-                                    <li class="text-center">Add To Favourites</li>
-                                    <li class="text-center">More</li>
+                                    <li>Email</li>
+                                    <li>Address</li>
+                                    <li>Writer</li>
+                                    <li class="text-center">Action Performed</li>
+                                    <li class="text-center">Time</li>
                                 </ul>
-                                <ul>
-                                    <li><a href="#"><span class="play_no">01</span><span class="play_hover"></span></a></li>
-                                    <li><a href="#">Bloodlust</a></li>
-                                    <li><a href="#">Ava Cornish &amp; Brian Hill</a></li>
-                                    <li class="text-center"><a href="#">5:26</a></li>
-                                    <li class="text-center"><a href="#"><span class="ms_icon1 ms_fav_icon"></span></a></li>
-                                    <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
-                                        <ul class="more_option">
-                                            <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Vinsu</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li><a href="#"><span class="play_no">02</span><span class="play_hover"></span></a></li>
-                                    <li><a href="#">Desired Games</a></li>
-                                    <li><a href="#">Ava Cornish &amp; Brian Hill</a></li>
-                                    <li class="text-center"><a href="#">5:26</a></li>
-                                    <li class="text-center"><a href="#"><span class="ms_icon1 ms_fav_icon"></span></a></li>
-                                    <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
-                                        <ul class="more_option">
-                                            <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li><a href="#"><span class="play_no">03</span><span class="play_hover"></span></a></li>
-                                    <li><a href="#">Until I Met You</a></li>
-                                    <li><a href="#">Ava Cornish &amp; Brian Hill</a></li>
-                                    <li class="text-center"><a href="#">5:26</a></li>
-                                    <li class="text-center"><a href="#"><span class="ms_icon1 ms_fav_icon"></span></a></li>
-                                    <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
-                                        <ul class="more_option">
-                                            <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul >
-                                    <li><a href="#"><span class="play_no">04</span><span class="play_hover"></span></a></li>
-                                    <li><a href="#">Dark Alley Acoustic</a></li>
-                                    <li><a href="#">Ava Cornish &amp; Brian Hill</a></li>
-                                    <li class="text-center"><a href="#">5:26</a></li>
-                                    <li class="text-center"><a href="#"><span class="ms_icon1 ms_fav_icon"></span></a></li>
-                                    <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
-                                        <ul class="more_option">
-                                            <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li><a href="#"><span class="play_no">05</span><span class="play_hover"></span></a></li>
-                                    <li><a href="#">Cloud nine</a></li>
-                                    <li><a href="#">Ava Cornish &amp; Brian Hill</a></li>
-                                    <li class="text-center"><a href="#">5:26</a></li>
-                                    <li class="text-center"><a href="#"><span class="ms_icon1 ms_fav_icon"></span></a></li>
-                                    <li class="text-center ms_more_icon"><a href="javascript:;"><span class="ms_icon1 ms_active_icon"></span></a>
-                                        <ul class="more_option">
-                                            <li><a href="#"><span class="opt_icon"><span class="icon icon_fav"></span></span>Add To Favourites</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <?php 
+                                    $data = get_all_track_logs("13.233.7.230");
+                                    $data = json_decode($data,TRUE);
+                                    $i=1;
+                                    //print_r($data);
+
+                                    foreach ($data as $key => $value) {
+                                        $epoch = $value['timestamp']/1000000;
+                                        echo ' <ul>
+                                                <li ><a href="track_buy_play.php?track_id='.$value['songId'].'"><span class="play_no">'.$i.'</span></a></li>
+                                                <li><a href="track_buy_play.php?track_id='.$value['songId'].'">'.$value['name'].'</a></li>
+                                                <li ><a href="#" title="'.$value['address'].'"> '.substr($value['address'], 0,22).'...</a></li>
+                                                <li ><a href="track_buy_play.php?track_id='.$value['songId'].'"><span class="play_no">'.$value['trackDataJSON']['write'].'</span></a></li>
+                                                <li class="text-center"><label class="label label-success">'.$value['trackDataJSON']['artist'].'</label></li>
+                                                <li class="text-center">
+                                                    '.date("d-m-Y H:i:s", substr($epoch, 0, 10)).'
+                                                </li>
+                                               
+                                            </ul>';
+                                            $i++;
+                                    }
+                                ?>
+                               
+                              
                             </div>
                         </div>
                      </div>

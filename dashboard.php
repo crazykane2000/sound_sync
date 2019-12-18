@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<?php session_start();
+    include 'configuration_function.php';
+    if (check_user_exist($api_host,$_SESSION['user'])) {
+        # code... do nothing we are good to go
+    }else{
+        header('Location:index.php?choice=error&value=Invalid username or password please try logging in again');
+        exit();
+    }
+  ?><!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
@@ -33,6 +41,11 @@
         <div class="ms_content_wrapper padder_top80">
             <?php include 'header.php'; ?>
             <div style="padding: 18px;"></div>
+            <?php 
+                $data = get_all_track_logs("13.233.7.230"); 
+                $data = json_decode($data,TRUE);
+                //print_r($data); 
+            ?>
             <!---Recently Played Music--->
             <div class="ms_rcnt_slider">
                 <div class="ms_heading">
@@ -41,216 +54,36 @@
                 </div>
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music1.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
+                        <?php
+                            foreach ($data as $key => $value) {
+                                $track_thumb = "default_thumb.jpg";
+                                if ($value['trackDataJSON']['thumb_nail']!="") {
+                                    $track_thumb = $value['trackDataJSON']['thumb_nail'];
+                                }
+                                echo '<div class="swiper-slide">
+                                        <div class="ms_rcnt_box">
+                                            <div class="ms_rcnt_box_img">
+                                                <img src="tracks/'.$track_thumb.'" alt="">
+                                                <div class="ms_main_overlay">
+                                                    <div class="ms_box_overlay"></div>
+                                                    <div class="ms_more_icon">
+                                                        <img src="images/svg/more.svg" alt="">
+                                                    </div>
+                                                    
+                                                    <a href="track_buy_play.php?track_id='.$value['songId'].'"><div class="ms_play_icon">
+                                                        <img src="images/svg/play.svg" alt="">
+                                                    </div></a>
+                                                </div>
+                                            </div>
+                                            <div class="ms_rcnt_box_text">
+                                                <h3><a href="#">'.$value['name'].'</a></h3>
+                                                <p>'.$value['trackDataJSON']['artist'].'</p>
+                                                <span>'.$value['trackDataJSON']['thumb_nail'].'</span>
+                                            </div>
                                         </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dream Your Moments (Duet)</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music2.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Until I Met You</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music3.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Gimme Some Courage</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music4.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dark Alley Acoustic</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music5.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Walking Promises</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music6.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Desired Games</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music1.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dream Your Moments (Duet)</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music2.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Until I Met You</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music3.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Gimme Some Courage</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/music/r_music4.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dark Alley Acoustic</a></h3>
-                                    <p>Ava Cornish & Brian Hill</p>
-                                </div>
-                            </div>
-                        </div>
+                                    </div>';
+                            }
+                        ?>
                     </div>
                 </div>
                 <!-- Add Arrows -->
@@ -260,216 +93,49 @@
           
             <div class="ms_featured_slider">
                 <div class="ms_heading">
-                    <h1>Featured Artists</h1>
+                    <h1>User logs Here</h1>
                     <span class="veiw_all"><a href="#">view more</a></span>
                 </div>
                 <div class="ms_feature_slider swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song1.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Best Of Ava Cornish</a></h3>
-                                </div>
+                    <div class="col-sm-12">
+                       
+                        <div class="album_inner_list">
+                            <div class="album_list_wrapper">
+                                <ul class="album_list_name">
+                                    <li>#</li>
+                                    <li>Email</li>
+                                    <li>Address</li>
+                                    <li class="text-center">Action Performed</li>
+                                    <li class="text-center">Time</li>
+                                </ul>
+                                <?php 
+                                    $data = get_all_user_logs("13.233.7.230");
+                                    $data = json_decode($data,TRUE);
+                                    $i=1;
+
+                                    foreach ($data as $key => $value) {
+                                        $epoch = $value['timestamp']/1000000;
+                                        echo ' <ul>
+                                                <li ><a href="#"><span class="play_no">'.$i.'</span></a></li>
+                                                <li><a href="#">'.$value['email'].'</a></li>
+                                                <li ><a href="#" title="'.$value['address'].'"> '.substr($value['address'], 0,22).'...</a></li>
+                                                <li class="text-center"><label class="label label-success">'.$value['actionPerformed'].'</label></li>
+                                                <li class="text-center">
+                                                    '.date("d-m-Y H:i:s", substr($epoch, 0, 10)).'
+                                                </li>
+                                               
+                                            </ul>';
+                                            $i++;
+                                    }
+                                ?>
+                               
+                              
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song2.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Until I Met You</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song3.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Gimme Some Courage</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song4.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dark Alley Acoustic</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song5.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Walking Promises</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song6.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Desired Games</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song1.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dream Your Moments (Duet)</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song2.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Until I Met You</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song3.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Gimme Some Courage</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="ms_rcnt_box">
-                                <div class="ms_rcnt_box_img">
-                                    <img src="images/featured/song4.jpg" alt="">
-                                    <div class="ms_main_overlay">
-                                        <div class="ms_box_overlay"></div>
-                                        <div class="ms_more_icon">
-                                            <img src="images/svg/more.svg" alt="">
-                                        </div>
-                                        
-                                        <div class="ms_play_icon">
-                                            <img src="images/svg/play.svg" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ms_rcnt_box_text">
-                                    <h3><a href="#">Dark Alley Acoustic</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     </div>
+                   
                 </div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next1 slider_nav_next"></div>
-                <div class="swiper-button-prev1 slider_nav_prev"></div>
+                    
             </div>
 			
           
